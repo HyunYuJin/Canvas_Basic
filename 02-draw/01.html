@@ -9,11 +9,16 @@
     canvas {
       background: #eee;
     }
+
+    canvas.canvas2 {
+      background: #ddd;
+    }
   </style>
 </head>
 
 <body>
   <canvas class="canvas" width="600" height="400">이 브라우저는 캔버스를 지원하지 않습니다.</canvas>
+  <canvas class="canvas2" width="600" height="400">이 브라우저는 캔버스를 지원하지 않습니다.</canvas>
 
   <script>
     // fillRect: 색을 칠하여 그리기
@@ -29,6 +34,16 @@
     context.fillRect(0, 0, 100, 100); // 도화지 위에 그릴 위치 정하기 (x, y, width, hegiht)
     context.clearRect(80, 80, 50, 50);
     context.strokeRect(150, 150, 100, 100);
+
+    // 연습
+    const canvas2 = document.querySelector('.canvas2');
+    const context2 = canvas2.getContext('2d');
+
+    context2.fillStyle = "violet";
+    context2.fillRect(0, 320, 80, 80);
+    context2.fillStyle = "purple";
+    context2.fillRect(250, 150, 100, 100);
+    context2.clearRect(250, 150, 50, 50);
   </script>
 </body>
 

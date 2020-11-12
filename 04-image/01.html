@@ -24,9 +24,9 @@
         const imgElem = new Image();
         imgElem.src = '../images/ilbuni1.png';
         imgElem.addEventListener('load', () => {
-            context.drawImage(imgElem, 50, 50);
-            context.drawImage(imgElem, 50, 50, 70, 120);
-            context.drawImage(imgElem, 100, 100, 200, 200, 0, 0, 100, 100);
+            context.drawImage(imgElem, 50, 50); // drawImage('이미지객체', x좌표, y좌표)
+            context.drawImage(imgElem, 50, 50, 70, 120); // drawImage('이미지객체', x좌표, y좌표, 크기width, 크기height)
+            // 원래 이미지의 crop
         });
     </script>
 </body>

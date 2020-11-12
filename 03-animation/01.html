@@ -20,21 +20,34 @@
     const canvas = document.querySelector('.canvas');
     const context = canvas.getContext('2d');
     let xPos = 10;
+    let timerId;
     
     // 그리는 것을 반복시킬 것이기 때문에
     function draw() {
       context.clearRect(0, 0, canvas.width, canvas.height); // canvas 판을 지우고 시작
       context.beginPath(); // Path가 마무리 되고 시작해야한다!
-      context.arc(xPos, 150, 5, Math.PI * 2, false);
+      context.arc(xPos, 150, 10, 0, Math.PI * 2, false);
       context.fill();
-      xPos += 1;
+      xPos += 5;
 
-      requestAnimationFrame(draw); // 자기 안에서 자기를 그리기 때문에 60분의 1초 속도로 무한 반복이 된다.
+      // if (xPos >= canvas.width - 10) {
+      //   return;
+      // } */
 
-      // 반복할때마다 원의 좌표를 바꿔준다.
+      timerId = requestAnimationFrame(draw); // 자기 안에서 자기를 그리기 때문에 60분의 1초 속도로 무한 반복이 된다.
+
+      // requestAnimationFrame()을 멈추는 함수 - cancelAnimationFrame()
+      // if (xPos >= canvas.width - 10) {
+      //   cancelAnimationFrame(timerId);
+      // }
+
     }
 
     draw();
+
+    canvas.addEventListener('click', () => {
+      cancelAnimationFrame(timerId);
+    })
   </script>
 </body>
 
