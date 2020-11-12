@@ -17,19 +17,19 @@
             border-radius: 50%;
         }
 
-        .color-btn[data-color='black'] {
+        .color-btn[data-color="black"] {
             background: black;
         }
 
-        .color-btn[data-color='red'] {
+        .color-btn[data-color="red"] {
             background: red;
         }
 
-        .color-btn[data-color='green'] {
+        .color-btn[data-color="green"] {
             background: green;
         }
 
-        .color-btn[data-color='blue'] {
+        .color-btn[data-color="blue"] {
             background: blue;
         }
 
@@ -38,8 +38,6 @@
             height: 40px;
             background: url(../images/ilbuni2.png) no-repeat 50% 50% / cover;
         }
-
-        .result-image {}
     </style>
 </head>
 
@@ -62,12 +60,13 @@
         const control = document.querySelector('.control');
         const saveBtn = document.querySelector('.save-btn');
         const resultImage = document.querySelector('.result-image');
-        let drawingMode; // true일 때만 그리기
-        let brush = 'color'; // 'color', 'image'
-        let colorVal = 'black'; // 색상
+
+        let drawingMode = false; // true일 때만 drawing
+        let brush = 'color'; // color, image
+        let colorVal = 'black';
 
         const imgElem = new Image();
-        imgElem.src = '../images/ilbuni2.png';
+        imgElem.src = "../images/ilbuni2.png";
 
         function downHandler() {
             drawingMode = true;
@@ -77,26 +76,32 @@
             drawingMode = false;
         }
 
-        function moveHandler(이벤트) {
+        function moveHandler(e) { // 그림을 그려준다.
             if (!drawingMode) return;
+            // console.log('이벤트 객체: ', e);
 
             switch (brush) {
                 case 'color':
                     context.beginPath();
-                    context.arc(이벤트.layerX, 이벤트.layerY, 10, 0, Math.PI * 2, false);
+                    context.arc(e.layerX, e.layerY, 10, 0, Math.PI * 2, false);
                     context.fill();
                     break;
                 case 'image':
-                    context.drawImage(imgElem, 이벤트.layerX, 이벤트.layerY, 50, 50);
+                    context.drawImage(imgElem, e.layerX, e.layerY, 50, 50);
                     break;
             }
+
+
         }
 
-        function setColor(이벤트) {
-            brush = 이벤트.target.getAttribute('data-type');
-            colorVal = 이벤트.target.getAttribute('data-color');
+        function setColor(e) {
+            // console.log(e.target.getAttribute('data-color'));
+
+            brush = e.target.getAttribute('data-type');
+            colorVal = e.target.getAttribute('data-color');
             context.fillStyle = colorVal;
-            console.log(brush);
+
+            console.log(brush)
         }
 
         function createImage() {
@@ -105,6 +110,7 @@
             imgElem.src = url;
             resultImage.appendChild(imgElem);
         }
+
 
         canvas.addEventListener('mousedown', downHandler);
         canvas.addEventListener('mousemove', moveHandler);
