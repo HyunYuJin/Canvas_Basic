@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Canvas</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
     <style>
         canvas {
             background: #eee;
@@ -17,24 +16,20 @@
         }
     </style>
 </head>
-
 <body>
-    <h1>Video</h1>
     <video class="video" src="../images/video.mp4" autoplay muted loop></video>
-    <!-- <video class="video" src="../images/video.mp4" muted loop></video> -->
-    <canvas class="canvas" width="600" height="400">이 브라우저는 캔버스를 지원하지 않습니다.</canvas>
+    <canvas class="canvas" width="600" height="400"></canvas>
 
     <div class="btns">
-        <button class="btn" data-color='red'>R</button>
-        <button class="btn" data-color='green'>G</button>
-        <button class="btn" data-color='blue'>B</button>
-        <button class="btn" data-color=''>Reset</button>
+        <button class="btn" data-color="red">R</button>
+        <button class="btn" data-color="green">G</button>
+        <button class="btn" data-color="blue">B</button>
+        <button class="btn" data-color="">Reset</button>
     </div>
 
     <script>
-        // 색상 변환
         const canvas = document.querySelector('.canvas');
-        const ctx = canvas.getContext('2d');
+        const context = canvas.getContext('2d');
 
         const videoElem = document.querySelector('.video');
         videoElem.addEventListener('canplaythrough', render);
@@ -42,38 +37,38 @@
         const btnsElem = document.querySelector('.btns');
 
         let imageData;
-        const particles = [];
-        let particle;
         let colorValue;
         let leng;
 
         function render() {
-            ctx.drawImage(videoElem, 0, 0, 600, 400);
-            imageData = ctx.getImageData(0, 0, 600, 400);
-            leng = imageData.data.length / 4;
+            context.drawImage(videoElem, 0, 0, 600, 400);
+            imageData = context.getImageData(0, 0, 600, 400); // 각 픽셀의 색상 정보를 가져올 수 있다.
+            leng = imageData.data.length / 4; // 24만 (960000인데 4로 나눴으니까)
 
-            for (let i = 0; i < leng; i++) {
+            // 현재 canvas에는 픽셀 24만개(600 * 400)가 있고 여기에 * 4를 해서 960000개의 픽셀의 색상 정보를 가지고 있다.
+            // 왜 4개냐?(red, blue, green, alpha)
+
+            for (let i = 0; i < leng; i++) { // render함수를 실행할 때마다 24만번을 돌 것이다.
                 switch (colorValue) {
-                    case 'red':
-                        imageData.data[i * 4 + 0] = 255;
+                    case 'red' :
+                        imageData.data[i * 4 + 0] = 225; // 0, 4, 8, 12, ... -> red에 해당하는 값만 접근해서 해당하는 값에 최대값을 225로 팍 올려준다.
                         break;
-                    case 'green':
-                        imageData.data[i * 4 + 1] = 255;
+                    case 'green' :
+                        imageData.data[i * 4 + 1] = 225; // 1, 5, 9, 13, ... -> green에 해당하는 값만 접근해서 해당하는 값에 최대값을 225로 팍 올려준다.
                         break;
-                    case 'blue':
-                        imageData.data[i * 4 + 2] = 255;
+                    case 'blue' :
+                        imageData.data[i * 4 + 2] = 225; // 2, 6, 10, 14, ... -> blue에 해당하는 값만 접근해서 해당하는 값에 최대값을 225로 팍 올려준다.
                         break;
                 }
             }
 
-            ctx.putImageData(imageData, 0, 0);
+            context.putImageData(imageData, 0, 0); // canvas에 다시 반영
             requestAnimationFrame(render);
         }
 
-        btnsElem.addEventListener('click', function (e) {
+        btnsElem.addEventListener('click', (e) => {
             colorValue = e.target.getAttribute('data-color');
         });
     </script>
 </body>
-
 </html>
