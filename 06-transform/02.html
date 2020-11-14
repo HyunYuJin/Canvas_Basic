@@ -20,36 +20,33 @@
         const canvas = document.querySelector('.canvas');
         const context = canvas.getContext('2d');
         let scaleValue = 1;
-        let rotationValue = 0;
+        let rotateValue = 0;
 
-        function toRadian(d) {
-            return d * Math.PI / 180;
+        function toRadian(deg) {
+            return deg * Math.PI / 180; // 360도는 2PI
         }
 
         function draw() {
-            // context.clearRect(0, 0, canvas.width, canvas.height);
+            // context.clearRect(0, 0, canvas.width, canvas.height); // 60초마다 무한으로 반복하는 것을 매 텀마다 지워준다.
             context.save();
-            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.setTransform(1, 0, 0, 1, 0, 0); // 변환 초기화
             // context.resetTransform();
             context.translate(350, 350);
             context.scale(scaleValue, scaleValue);
-            context.rotate(toRadian(rotationValue));
+            context.rotate(toRadian(rotateValue));
             context.strokeRect(-50, -50, 100, 100);
 
-            // context.setTransform(1,0,0,1,0,0);
-            // context.fillRect(10, 10, 30, 30);
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.fillRect(10, 10, 30, 30);
             context.restore();
 
-            context.fillRect(10, 10, 30, 30);
-
             scaleValue += 0.05;
-            rotationValue += 1;
+            rotateValue += 1;
 
             requestAnimationFrame(draw);
         }
 
         draw();
-
     </script>
 </body>
 

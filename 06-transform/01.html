@@ -24,14 +24,14 @@
         context.fillStyle = 'orange';
         context.fillRect(150, 150, 200, 200);
 
-        context.save();
+        context.save(); // canvas의 상태를 저장한다.
 
         context.fillStyle = 'blue';
         context.beginPath();
         context.arc(300, 300, 50, 0, Math.PI * 2, false);
         context.fill();
 
-        context.restore();
+        context.restore(); // save 했던 시점으로 돌아간다.
 
         context.beginPath();
         context.arc(300, 300, 20, 0, Math.PI * 2, false);
