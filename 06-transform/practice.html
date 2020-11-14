@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Practice</title>
+    <style>
+        canvas {
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas class="canvas" width="600" height="400"></canvas>
+
+    <script>
+        const canvas = document.querySelector('.canvas');
+        const context = canvas.getContext('2d');
+        let scaleValue = 1;
+        let rotateValue = 0;
+
+        function isRadian(deg) {
+            return deg * Math.PI / 180;
+        }
+
+        function draw() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.save();
+
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.translate(200, 200);
+            // context.scale(scaleValue, scaleValue);
+            context.rotate(isRadian(rotateValue));
+
+            context.beginPath();
+            context.arc(-50, -50, 50, 0, isRadian(200), false);
+            context.stroke();
+
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.restore();
+
+            scaleValue += 0.005;
+            rotateValue += 1;
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+
+</html>
