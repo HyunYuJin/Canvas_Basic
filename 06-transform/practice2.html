@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Practice</title>
+    <style>
+        canvas {
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas class="canvas" width="600" height="400"></canvas>
+
+    <script>
+        const canvas = document.querySelector(".canvas");
+        const context = canvas.getContext("2d");
+        let degValue = 0;
+
+        function isRadian(deg) {
+            return (deg * Math.PI) / 180;
+        }
+
+        function draw() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.save();
+
+            context.beginPath();
+            context.arc(300, 200, 50, 0, isRadian(degValue), false);
+            degValue += 1;
+            context.stroke();
+
+            if (degValue === 360) {
+                degValue = 0;
+            }
+            context.restore();
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+
+</html>
