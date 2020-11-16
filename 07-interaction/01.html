@@ -22,16 +22,12 @@
 
         context.fillRect(200, 200, 100, 100);
 
-        function clickHandler(이벤트) {
-            // console.log(이벤트.clientX, 이벤트.clientY);
-            // console.log(이벤트.layerX, 이벤트.layerY);
-            const x = 이벤트.layerX;
-            const y = 이벤트.layerY;
-
-            if (x > 200 &&
-                x < 200 + 100 &&
-                y > 200 &&
-                y < 200 + 100) {
+        function clickHandler(e) {
+            const x = e.layerX;
+            const y = e.layerY;
+            
+            // 마우스의 위치를 사각형 영역과 비교하기
+            if (x > 200 && x < 200 + 100 && y > 200 && y < 200 + 100) {
                 console.log('x ok');
             }
         }
