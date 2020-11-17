@@ -18,6 +18,7 @@
 
     <script src="./Box.js"></script>
     <script src="./Panel.js"></script>
+    <script src="./utils.js"></script>
     <script>
         const canvas = document.querySelector('.canvas');
         const context = canvas.getContext('2d');
@@ -30,6 +31,7 @@
         let oX;
         let oY;
         let step; // 애플리케이션의 상태(단계)를 저장 1 ~ 4
+        let refId;
 
         context.font = 'bold 30px san-serif';
 
@@ -62,11 +64,28 @@
                     }
                     break;
                 case 2:
+                    // panel.scale += 0.02;
+                    // 현재크기 = 현재크기 + (목표크기 - 현재크기) * 0.1
+                    panel.scale = panel.scale + (1 - panel.scale) * 0.1;
+                    // scale이 0 ~ 1까지 움직일 때, 각도는 0 ~ 720도 rotation: 각도 = (스케일(0 ~ 1) * 720(최종 각도))
+                    panel.angle = panel.scale * 720;
+                    panel.draw();
+                    if (panel.scale >= 0.999) { // scale은 1이 100이다.
+                        panel.scale = 1; // 정확하게 scale 1로 바꿔주기
+                        step = 3;
+                    }
+                    break;
+                case 3:
                     panel.draw();
                     break;
             }
 
-            requestAnimationFrame(render);
+            refId = requestAnimationFrame(render);
+            if (step === 3) {
+                panel.showContent();
+                cancelAnimationFrame(refId); // 숫자 쌍을 맞춰서 cancelAnimationFrame을 취소해줄 수 있다.
+            }
+            // console.log(refId);
         }
 
         function init() {
@@ -100,10 +119,14 @@
                     selectedBox = box;
                 }
             }
-            if (selectedBox) {
+            if (step === 1 && selectedBox) {
                 // console.log(selectedBox.index);
                 step = 2;
-                // selectedBox = null;
+            } else if (step === 3) {
+                step = 1;
+                panel.scale = 0;
+                selectedBox = null;
+                render(); // 다시 재개
             }
         });
 
