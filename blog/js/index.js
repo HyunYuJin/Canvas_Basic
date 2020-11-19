@@ -1,5 +1,21 @@
-var canvas = document.getElementById("canvas");
-var context = canvas.getContext("2d");
+// Menu
+var mainMenu = document.querySelector('.main-menu-btn');
+var mainMenuList = document.querySelector('.main-menu-list');
+
+mainMenuList.style.display = 'none';
+
+function doDisplay() {
+    console.log('adsf')
+    if (mainMenuList.style.display == 'none') {
+        mainMenuList.style.display == 'block';
+    } else {
+        mainMenuList.style.display = 'none';
+    }
+}
+
+// Canvas
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -11,7 +27,7 @@ var mouse = {
     y: undefined
 }
 
-window.addEventListener("mousemove", function (event) {
+window.addEventListener('mousemove', function (event) {
     mouse.x = event.x;
     mouse.y = event.y;
 });
