@@ -16,7 +16,7 @@ class Circle {
         context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         context.strokeStyle = this.color;
         context.stroke();
-        context.fill();
+        context.fill()
         context.fillStyle = color;
     }
 
@@ -24,23 +24,20 @@ class Circle {
         if (this.x + this.radius > innerWidth || this.x - this.radius < 0) {
             this.dx = -this.dx;
         }
-
         if (this.y + this.radius > innerHeight || this.y - this.radius < 0) {
             this.dy = -this.dy;
         }
-
         this.y += this.dy;
         this.x += this.dx;
 
-        // interaction
+        //interaction 
         if (mouse.x - this.x < 50 && mouse.x - this.x > -50 && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
             if (this.radius < maxRadius) {
                 this.radius += 1;
-            } else if (this.radius > minRadius) {
-                this.radius = 1;
             }
-
-            this.draw();
+        } else if (this.radius > minRadius) {
+            this.radius -= 1;
         }
+        this.draw();
     }
 }
