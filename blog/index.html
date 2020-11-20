@@ -6,10 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medeoduck</title>
     <style>
-        body {
-            margin: 0;
-        }
-
         canvas {
             position: absolute;
             top: 0;
@@ -24,47 +20,117 @@
             color: #042d70;
         }
 
-        button {
-            outline: 0;
-            cursor: pointer;
-        }
-
-        .main-menu-btn {
+        #toggle {
             display: inline-flex;
             align-items: center;
             position: fixed;
             left: 18px;
-            top: 6px;
+            top: 18px;
             z-index: 100;
-            height: 40px;
+            width: 28px;
+            height: 30px;
             padding: 0;
             border: 0;
-            font-size: 11px;
-            font-weight: bold;
-            color: #042d70;
-            background: transparent;
         }
 
-        .main-menu {
+        #toggle span:after,
+        #toggle span:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: -9px;
+        }
+
+        #toggle span:after {
+            top: 9px;
+        }
+
+        #toggle span {
+            position: relative;
+            display: block;
+        }
+
+        #toggle span,
+        #toggle span:after,
+        #toggle span:before {
+            width: 100%;
+            height: 4px;
+            background-color: #888;
+            transition: all 0.3s;
+            backface-visibility: hidden;
+            border-radius: 2px;
+        }
+
+        /* on activation */
+        #toggle.on span {
+            background-color: transparent;
+        }
+
+        #toggle.on span:before {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        #toggle.on span:after {
+            transform: rotate(-45deg) translate(7px, -8px);
+        }
+
+        #toggle.on+#menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #menu {
             position: fixed;
+            width: 200px;
             left: 21px;
             top: 60px;
             z-index: 100;
+            opacity: 0;
+            visibility: hidden;
             transition: .2s;
-            transform: translate3d(-70vw, 0, 0);
+        }
+
+        #menu:after {
+            position: absolute;
+            top: -15px;
+            left: 95px;
+            content: "";
+            display: block;
+        }
+
+        ul,
+        li,
+        li a {
+            list-style: none;
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        li a {
+            padding: 5px;
+            color: #888;
+            text-decoration: none;
+            transition: all .2s;
+        }
+
+        li a:hover,
+        li a:focus {
+            background: rgba(125, 68, 70, 0.5);
+            color: #fff;
         }
     </style>
 </head>
 
 <body>
-    <button class="main-menu-btn" onclick="doDisplay();">MENU</button>
-    <nav class="main-menu">
-        <ul class="main-menu-list">
-            <li class="main-menu--item">ABOUT MEDEODUCK</li>
-            <li class="main-menu--item">STUDY</li>
-            <li class="main-menu--item">PROJECT</li>
+    <a href="#menu" id="toggle"><span></span></a>
+    <div id="menu">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
-    </nav>
+    </div>
     <h1>MeDeoDuck's World!</h1>
     <canvas id="canvas"></canvas>
 
